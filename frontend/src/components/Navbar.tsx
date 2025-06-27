@@ -1,50 +1,58 @@
+import React from 'react'
 import Link from 'next/link';
+
+
+
+// Placeholder ConnectButton
+const ConnectButton = () => (
+  <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">Connect Wallet</button>
+);
 
 const Navbar = () => {
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 pt-4 px-4 sm:px-6 lg:px-8">
-      <nav className="max-w-7xl mx-auto bg-black/90 backdrop-blur-md rounded-2xl border border-gray-800">
-        <div className="px-6 sm:px-8 lg:px-12">
-          <div className="flex justify-between items-center h-20">
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-                DynaFi
+    <nav className="bg-black border-b border-green-500/20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            {/* Logo section */}
+            <div className="flex items-center gap-3">
+           
+              <span className="text-2xl font-bold bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
+               <Link href="/">Connect.Flow</Link>
               </span>
-            </Link>
-
-            {/* Navigation Links */}
-            <div className="hidden md:flex items-center space-x-10">
-              <Link href="/features" className="text-gray-300 hover:text-blue-400 transition-colors">
-                Features
-              </Link>
-              <Link href="/docs" className="text-gray-300 hover:text-blue-400 transition-colors">
-                Documentation
-              </Link>
-              <Link href="/governance" className="text-gray-300 hover:text-blue-400 transition-colors">
-                Governance
-              </Link>
-              <Link 
-                href="/launch"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-colors"
-              >
-                Launch App
-              </Link>
             </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button className="text-gray-300 hover:text-blue-400 p-2">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            {/* Search bar */}
+            <div className="relative w-64 md:w-80">
+              <input
+                type="text"
+                placeholder="Search creators..."
+                className="w-full bg-black/40 border border-green-500/30 rounded-lg py-2 px-4 text-white focus:outline-none focus:border-green-500/70 focus:ring-1 focus:ring-green-500/50 placeholder-gray-400"
+              />
+              <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-green-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </button>
             </div>
           </div>
+          {/* Connect button and Dashboard button */}
+          <div className="flex flex-col items-end gap-2">
+            <ConnectButton />
+            <Link 
+              href="/dashboard" 
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500/20 to-green-600/20 rounded-xl border border-green-500/50 hover:bg-green-500/10 transition-all duration-300 group"
+            >
+              <span className="text-xl">📊</span>
+              <span className="text-white font-medium">Your Dashboard</span>
+              <svg className="w-5 h-5 text-green-400 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 };
 
-export default Navbar; 
+export default Navbar;

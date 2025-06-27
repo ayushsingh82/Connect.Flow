@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DynaFi - Modular, AI-Enhanced DeFi for Hyperion DACs",
-  description: "Power up your DAC with plug-and-play DeFi tools—staking, lending, swaps—with AI-driven governance and real-time yield optimization.",
+  title: "Connect.Fun",
+  description: "your time is money",
 };
 
 export default function RootLayout({

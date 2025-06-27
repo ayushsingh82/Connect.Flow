@@ -23,7 +23,7 @@ const config = getDefaultConfig({
   appName: 'DynaFi',
   projectId: 'YOUR_PROJECT_ID', // <-- replace with your actual project ID
   chains: [mainnet, polygon, optimism, arbitrum, base],
-  ssr: true,
+  ssr: false,
 });
 
 const queryClient = new QueryClient();
