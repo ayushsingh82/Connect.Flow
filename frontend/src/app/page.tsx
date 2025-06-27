@@ -1,177 +1,381 @@
 import Link from 'next/link';
 
+// Placeholder Logo component
+const Logo = () => (
+  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center font-bold text-white">CF</div>
+);
+
+// Placeholder ConnectButton
+const ConnectButton = () => (
+  <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">Connect Wallet</button>
+);
+
+const NOUNS_IMAGE_BASE = "https://noun.pics/";
+
+const topCreators = [
+  {
+    name: "Alex Thompson",
+    username: "alexdev",
+    rate: 50,
+    growth: "+245%",
+    responseRate: "100%",
+    bio: "Senior Blockchain Developer |  Expert",
+    tags: ["Blockchain"]
+  },
+  {
+    name: "Sarah Chen",
+    username: "sarahc",
+    rate: 90,
+    growth: "+187%",
+    responseRate: "98%",
+    bio: "Digital Artist | NFT Specialist |  Designer",
+    tags: ["NFT", "Design"]
+  },
+  {
+    name: "Mike Roberts",
+    username: "mikero",
+    rate: 120,
+    growth: "+120%",
+    responseRate: "99%",
+    bio: "Tech Consultant |  Developer | Web3 Expert",
+    tags: ["Web3", "Tech"]
+  },
+  {
+    name: "Lisa Wong",
+    username: "lisa",
+    rate: 160,
+    growth: "+160%",
+    responseRate: "97%",
+    bio: "Business Mentor |  Ambassador | Startup Advisor",
+    tags: ["Business", "Startup"]
+  },
+  {
+    name: "John Smith",
+    username: "johndev",
+    rate: 150,
+    growth: "+132%",
+    responseRate: "100%",
+    bio: "Financial Advisor |  Token Economics | DeFi Expert",
+    tags: ["DeFi", "Finance"]
+  },
+  {
+    name: "Emma Davis",
+    username: "emmadev",
+    rate: 110,
+    growth: "+178%",
+    responseRate: "99%",
+    bio: "Web Developer | Move Language Specialist |  Builder",
+    tags: ["Move", "Development"]
+  }
+];
+
+const floatingCards = [
+  { name: "Sarah Chen", role: "Digital Artist", rate: "90" },
+  { name: "Mike Roberts", role: "Tech Consultant", rate: "120" },
+  { name: "Lisa Wong", role: "Business Mentor", rate: "160" },
+  { name: "John Smith", role: "Financial Advisor", rate: "150" },
+  { name: "Emma Davis", role: "Web Developer", rate: "110" },
+  { name: "David Kim", role: "Marketing Expert", rate: "130" },
+];
+
+const categories = [
+  { icon: "🌟", name: "All Creators" },
+  { icon: "⭐", name: "Top Creators" },
+  { icon: "🎥", name: "Influencers" },
+  { icon: "🚀", name: "Founders" },
+  { icon: "💰", name: "DeFi Experts" },
+  { icon: "🎨", name: "NFT Experts" },
+  { icon: "💻", name: "Developers" },
+  { icon: "📊", name: "Analysts" }
+];
+
+const animationStyles = `
+  @keyframes floatDown {
+    0%, 100% { transform: translateY(-10px); }
+    50% { transform: translateY(10px); }
+  }
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(10px); }
+    50% { transform: translateY(-10px); }
+  }
+`;
+
+const generateAvatar = (index: number) => {
+  const nounId = 1290 + index;
+  return (
+    <img 
+      src={`${NOUNS_IMAGE_BASE}${nounId}.png`}
+      alt={`NOUN ${nounId}`}
+      className="w-12 h-12 rounded-full object-cover"
+    />
+  );
+};
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-              🚀 DynaFi: Modular, AI-Enhanced DeFi for Hyperion DACs
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-12">
-              Power up your DAC with plug-and-play DeFi tools—staking, lending, swaps—with AI-driven governance and real-time yield optimization.
+      <style>{animationStyles}</style>
+      {/* Nav with logo, search bar, and connect button */}
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            {/* Logo section */}
+            <div className="flex items-center gap-3">
+              <Logo />
+              <span className="text-2xl font-bold bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
+                Connect.Flow
+              </span>
+            </div>
+            {/* Search bar */}
+            <div className="relative w-64 md:w-80">
+              <input
+                type="text"
+                placeholder="Search creators..."
+                className="w-full bg-black/40 border border-green-500/30 rounded-lg py-2 px-4 text-white focus:outline-none focus:border-green-500/70 focus:ring-1 focus:ring-green-500/50 placeholder-gray-400"
+              />
+              <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-green-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          {/* Connect button and Dashboard button */}
+          <div className="flex flex-col items-end gap-2">
+            <ConnectButton />
+            <Link 
+              href="/dashboard" 
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500/20 to-green-600/20 rounded-xl border border-green-500/50 hover:bg-green-500/10 transition-all duration-300 group"
+            >
+              <span className="text-xl">📊</span>
+              <span className="text-white font-medium">Your Dashboard</span>
+              <svg className="w-5 h-5 text-green-400 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </nav>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Hero section with improved responsiveness */}
+        <section className="flex flex-col md:flex-row items-center justify-between py-8 md:py-12">
+          {/* Left side - Text content */}
+          <div className="w-full md:w-1/2 text-left mb-12 md:mb-0">
+            <div className="relative">
+              <div className="absolute -inset-1 bg-green-500/30 rounded-lg blur-xl opacity-70"></div>
+              <h1 className="relative text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent leading-tight">
+                TIME IS MONEY
+              </h1>
+            </div>
+            <p className="text-xl text-white mb-8 max-w-lg opacity-90">
+              Get instant access to and invest in your favorite creators & experts.
             </p>
-            <div className="flex justify-center gap-4">
-              <Link 
-                href="/launch"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
-              >
-                Launch App
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link href="/explore-creators" className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20 text-center">
+                Explore Creators
               </Link>
-              <Link 
-                href="/docs"
-                className="border border-blue-600 text-blue-400 hover:bg-blue-600/10 px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
-              >
-                Read Docs
+              <Link href="/register-yourself" className="px-6 py-3 border-2 border-green-500 text-green-500 rounded-lg font-semibold hover:bg-green-500/10 transition-colors text-center">
+                Get Paid for your time
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Problem Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-blue-400">Current DeFi Challenges</h2>
-            <p className="text-gray-300 mt-4">Despite DeFi's growth, current protocols face significant limitations</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors">
-              <div className="h-12 w-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-blue-400">Rigid Architecture</h3>
-              <p className="text-gray-300">Monolithic and rigid, hard to extend without deep technical changes</p>
-            </div>
-            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors">
-              <div className="h-12 w-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-blue-400">DAC Incompatibility</h3>
-              <p className="text-gray-300">Not DAC-friendly, requiring full forks to support unique goals</p>
-            </div>
-            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors">
-              <div className="h-12 w-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-blue-400">Manual Governance</h3>
-              <p className="text-gray-300">Manually governed, leading to slow, inefficient decision-making</p>
-            </div>
-            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors">
-              <div className="h-12 w-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-blue-400">Poor Capital Allocation</h3>
-              <p className="text-gray-300">Disconnected from user goals, with poor yield routing and capital allocation</p>
+            {/* Leaderboard Section */}
+            <div className="mt-12">
+              <Link 
+                href="/leaderboard" 
+                className="group relative inline-flex items-center gap-2 px-6 py-3 bg-black/40 text-green-400 rounded-lg hover:bg-green-500/10 transition-all duration-300"
+              >
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-green-500/50 to-green-400/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
+                <div className="absolute inset-0 rounded-lg border border-green-500/50 group-hover:border-green-400/70 transition-colors duration-300"></div>
+                <div className="relative flex items-center gap-2">
+                  <span className="text-2xl">🏆</span>
+                  <span className="font-semibold group-hover:text-green-300">Leaderboard</span>
+                  <svg 
+                    className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Solution Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-blue-400">The DynaFi Solution</h2>
-            <p className="text-gray-300 mt-4">A native Hyperion DeFi toolkit offering powerful features</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors group">
-              <div className="h-14 w-14 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-colors">
-                <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                </svg>
+          {/* Right side - Updated floating cards with SVG-based avatars */}
+          <div className="w-full md:w-1/2 relative h-[600px] hidden md:block">
+            <div className="absolute inset-0 flex justify-center gap-8">
+              {/* Left column - Moving down */}
+              <div className="relative w-64">
+                {floatingCards.slice(0, 3).map((card, index) => (
+                  <div
+                    key={`left-${index}`}
+                    className="group absolute bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl shadow-lg shadow-green-500/20 p-6 w-full transform transition-all duration-1000"
+                    style={{
+                      top: `${index * 200}px`,
+                      animationName: 'floatDown',
+                      animationDuration: `${3 + index}s`,
+                      animationTimingFunction: 'ease-in-out',
+                      animationIterationCount: 'infinite',
+                      animationDelay: `${index * 0.5}s`
+                    }}
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      {generateAvatar(index)}
+                      <div>
+                        <h3 className="font-semibold text-white">{card.name}</h3>
+                        <p className="text-sm text-green-400">{card.role}</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-green-400 font-bold">{card.rate} FLOW<span className="text-white/60 text-sm ml-1">/min</span></span>
+                      <button 
+                        className="opacity-0 group-hover:opacity-100 transition-all duration-300 px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-semibold transform scale-95 group-hover:scale-100 hover:bg-green-600 shadow-lg shadow-green-500/25 z-10"
+                      >
+                        Buy Time
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-2xl font-semibold mb-4 text-blue-400">Modular Primitives</h3>
-              <p className="text-gray-300 text-lg">Staking, lending, and DEX modules you can fork, configure, or combine</p>
-            </div>
-            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors group">
-              <div className="h-14 w-14 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-colors">
-                <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+              {/* Right column - Moving up */}
+              <div className="relative w-64">
+                {floatingCards.slice(3).map((card, index) => (
+                  <div
+                    key={`right-${index}`}
+                    className="group absolute bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl shadow-lg shadow-green-500/20 p-6 w-full transform transition-all duration-1000"
+                    style={{
+                      bottom: `${index * 200}px`,
+                      animationName: 'floatUp',
+                      animationDuration: `${3 + index}s`,
+                      animationTimingFunction: 'ease-in-out',
+                      animationIterationCount: 'infinite',
+                      animationDelay: `${index * 0.5}s`
+                    }}
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      {generateAvatar(index + 3)}
+                      <div>
+                        <h3 className="font-semibold text-white">{card.name}</h3>
+                        <p className="text-sm text-green-400">{card.role}</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-green-400 font-bold">{card.rate} FLOW<span className="text-white/60 text-sm ml-1">/min</span></span>
+                      <button 
+                        className="opacity-0 group-hover:opacity-100 transition-all duration-300 px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-semibold transform scale-95 group-hover:scale-100 hover:bg-green-600 shadow-lg shadow-green-500/25 z-10"
+                      >
+                        Buy Time
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-2xl font-semibold mb-4 text-blue-400">AI-powered Suggestions</h3>
-              <p className="text-gray-300 text-lg">Real-time optimizations for risk, yield, and incentives</p>
-            </div>
-            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors group">
-              <div className="h-14 w-14 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-colors">
-                <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-semibold mb-4 text-blue-400">Governance-aware Execution</h3>
-              <p className="text-gray-300 text-lg">DACs control what AI can auto-execute or propose</p>
-            </div>
-            <div className="bg-gray-800/50 p-8 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors group">
-              <div className="h-14 w-14 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-colors">
-                <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-semibold mb-4 text-blue-400">YieldBoost</h3>
-              <p className="text-gray-300 text-lg">Stream excess yield to your DAC treasury, mission vaults, or reward pools</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900/50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-blue-400">🔧 Core Features</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
-              <h3 className="text-xl font-semibold mb-3 text-blue-400">🧱 Composable DeFi Primitives</h3>
-              <p className="text-gray-300">Plug-and-play staking, lending, and swap modules</p>
-            </div>
-            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
-              <h3 className="text-xl font-semibold mb-3 text-blue-400">🤖 AI Agent</h3>
-              <p className="text-gray-300">Learns from protocol activity and proposes improvements</p>
-            </div>
-            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
-              <h3 className="text-xl font-semibold mb-3 text-blue-400">🧠 DAO-Configurable Parameters</h3>
-              <p className="text-gray-300">Customize everything—from LTVs to emission curves</p>
-            </div>
-            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
-              <h3 className="text-xl font-semibold mb-3 text-blue-400">💸 YieldBoost Utility</h3>
-              <p className="text-gray-300">Route yield wherever your DAO needs it</p>
-            </div>
-            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
-              <h3 className="text-xl font-semibold mb-3 text-blue-400">🛠️ Fork + Extend</h3>
-              <p className="text-gray-300">Build new primitives or strategies with minimal effort</p>
-            </div>
-            <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
-              <h3 className="text-xl font-semibold mb-3 text-blue-400">🌉 Metis SDK Hooks</h3>
-              <p className="text-gray-300">For reward routing, interchain ops, and DAC integration</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-8 text-blue-400">Ready to Transform Your DAC?</h2>
-          <Link 
-            href="/launch"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
-          >
-            Get Started Now
-          </Link>
-        </div>
-      </section>
+        </section>
+        {/* IMPROVED Categories section with better visual elements and smaller cards */}
+        <section className="py-12">
+          <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">Explore Categories</h2>
+          <div className="grid grid-cols-4 md:grid-cols-8 gap-4">
+            {categories.map((category, index) => (
+              <button 
+                key={index}
+                className="flex flex-col items-center gap-2 p-3 bg-black/60 backdrop-blur-md border border-green-500/30 rounded-xl hover:bg-green-500/10 transition-all transform hover:scale-105 hover:border-green-500/60 group"
+              >
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-r from-green-400 to-green-600 opacity-90 group-hover:opacity-100 text-white">
+                  <span className="text-lg">{category.icon}</span>
+                </div>
+                <span className="text-white font-medium text-xs sm:text-sm">{category.name}</span>
+              </button>
+            ))}
+          </div>
+          {/* Enhanced horizontal line with glow effect */}
+          <div className="relative py-8 mt-8">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full h-px bg-gradient-to-r from-green-500/0 via-green-500/70 to-green-500/0">
+                <div className="absolute inset-0 blur-sm bg-green-500/30"></div>
+              </div>
+            </div>
+          </div>
+          {/* Top creators section - Improved  creators cards */}
+          <div className="mt-8">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">Top  Creators</h2>
+              <button className="text-green-400 hover:text-green-300 text-sm font-medium">
+                View All
+              </button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {topCreators.map((creator, index) => (
+                <div 
+                  key={index}
+                  className="group bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl p-6 flex flex-col gap-4 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300 hover:border-green-400 hover:translate-y-[-4px] hover:bg-black/80 relative"
+                >
+                  {/* Move price to left side */}
+                  <div className="flex items-end justify-between mt-auto pt-4 border-t border-green-500/20">
+                    <div>
+                      <span className="text-green-400 text-2xl font-bold">{creator.rate} FLOW</span>
+                      <span className="text-white/60 text-sm ml-1">/ min</span>
+                    </div>
+                    {/* Buy Time button - positioned in bottom right */}
+                    <button 
+                      className="opacity-0 group-hover:opacity-100 transition-all duration-300 px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-semibold transform scale-95 group-hover:scale-100 hover:bg-green-600 shadow-lg shadow-green-500/25 z-10"
+                    >
+                      Buy Time
+                    </button>
+                  </div>
+                  {/* Rest of the card content */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex gap-4">
+                      {generateAvatar(index)}
+                      <div>
+                        <h3 className="text-white font-semibold text-lg">{creator.name}</h3>
+                        <div className="flex items-center gap-2">
+                          <span className="text-green-400 text-sm font-medium">@{creator.username}</span>
+                          <span className="text-green-500 text-xs">{creator.growth}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex gap-1 items-center text-xs text-green-400">
+                      <span>{creator.responseRate}</span>
+                      <span className="text-green-500">✓</span>
+                    </div>
+                  </div>
+                  <p className="text-white/80 text-sm">
+                    {creator.bio}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                    {creator.tags.map((tag, tagIndex) => (
+                      <span key={tagIndex} className="px-3 py-1 bg-green-500/10 text-green-400 rounded-full text-xs">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        {/* How it Works section with improved visuals */}
+        <section className="py-16">
+          <h2 className="text-3xl font-bold mb-12 bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent text-center">How it Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl shadow-lg shadow-green-500/20 p-8 transition-transform hover:scale-105">
+              <div className="w-16 h-16 flex items-center justify-center bg-green-500/20 rounded-full mx-auto mb-6 text-2xl text-green-400">1</div>
+              <h3 className="text-xl font-bold text-green-400 mb-4 text-center">FIND CREATORS</h3>
+              <p className="text-white/80 text-center">Discover creators across a variety of specialties</p>
+            </div>
+            <div className="bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl shadow-lg shadow-green-500/20 p-8 transition-transform hover:scale-105">
+              <div className="w-16 h-16 flex items-center justify-center bg-green-500/20 rounded-full mx-auto mb-6 text-2xl text-green-400">2</div>
+              <h3 className="text-xl font-bold text-green-400 mb-4 text-center">BUY THEIR TIME</h3>
+              <p className="text-white/80 text-center">Buy minutes of the creators you want to connect with or invest in</p>
+            </div>
+            <div className="bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl shadow-lg shadow-green-500/20 p-8 transition-transform hover:scale-105">
+              <div className="w-16 h-16 flex items-center justify-center bg-green-500/20 rounded-full mx-auto mb-6 text-2xl text-green-400">3</div>
+              <h3 className="text-xl font-bold text-green-400 mb-4 text-center">CONNECT</h3>
+              <p className="text-white/80 text-center">Connect with powerful creators through direct messages, API calls, and automated tasks.</p>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
