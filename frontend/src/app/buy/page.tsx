@@ -1,13 +1,28 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
+// Placeholder Logo component
+const Logo = () => (
+  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center font-bold text-white">CF</div>
+);
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+// Placeholder ConnectButton
+const ConnectButton = () => (
+  <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">Connect Wallet</button>
+);
 
+// Extend Window interface for TradingView
+declare global {
+  interface Window {
+    TradingView: any;
+  }
+}
 
 const NOUNS_IMAGE_BASE = "https://noun.pics/";
 
 const Buy = () => {
-  const navigate = useNavigate();
   const [selectedMinutes, setSelectedMinutes] = useState(15);
   const [showChart, setShowChart] = useState(false);
   const basePrice = 50; // Base price for 1 minute
@@ -55,27 +70,14 @@ const Buy = () => {
     }
   }, [showChart]);
 
-  const calculateTotalPrice = (minutes) => {
+  const calculateTotalPrice = (minutes: number) => {
     return (basePrice * minutes).toFixed(2);
   };
 
   return (
     <div className="min-h-screen bg-black">
       {/* Nav bar with Link */}
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-2">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8">
-              <Logo />
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
-              Connect.Flow
-            </span>
-          </Link>
-          
-          <ConnectButton />
-        </div>
-      </nav>
+   
 
       {/* Main content - split into two columns */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -254,7 +256,6 @@ const Buy = () => {
           </div>
         </div>
       )}
-      <Footer />
     </div>
   );
 };

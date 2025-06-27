@@ -1,7 +1,17 @@
+"use client";
+
 import React, { useState } from 'react';
+import Link from 'next/link';
 
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+// Placeholder Logo component
+const Logo = () => (
+  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center font-bold text-white">CF</div>
+);
 
+// Placeholder ConnectButton
+const ConnectButton = () => (
+  <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">Connect Wallet</button>
+);
 
 const NOUNS_IMAGE_BASE = "https://noun.pics/";
 const NOUNS_RANGE = {
@@ -9,13 +19,21 @@ const NOUNS_RANGE = {
   end: 1350
 };
 
+interface FormData {
+  name: string;
+  tagline: string;
+  twitter: string;
+  specialties: string[];
+  bio: string;
+  tags: string[];
+}
+
 const RegisterYourself = () => {
-  const navigate = useNavigate();
-  const [selectedNounId, setSelectedNounId] = useState(null);
+  const [selectedNounId, setSelectedNounId] = useState<number | null>(null);
   const [showNounSelector, setShowNounSelector] = useState(false);
   
   // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     tagline: '',
     twitter: '',
@@ -42,7 +60,7 @@ const RegisterYourself = () => {
   );
   
   // Handle input changes
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -62,7 +80,7 @@ const RegisterYourself = () => {
   };
 
   // Handle removing a tag
-  const handleRemoveTag = (tagToRemove) => {
+  const handleRemoveTag = (tagToRemove: string) => {
     setFormData({
       ...formData,
       tags: formData.tags.filter(tag => tag !== tagToRemove)
@@ -70,7 +88,7 @@ const RegisterYourself = () => {
   };
   
   // Handle checkbox changes
-  const handleSpecialtyChange = (id) => {
+  const handleSpecialtyChange = (id: string) => {
     const updatedSpecialties = [...formData.specialties];
     
     if (updatedSpecialties.includes(id)) {
@@ -89,32 +107,19 @@ const RegisterYourself = () => {
   };
   
   // Form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     // Here you would typically send the data to your backend
     // Then redirect after successful submission
     alert('Registration successful!');
-    navigate('/');
+    // Use Next.js router or window.location for navigation
+    window.location.href = '/';
   };
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Nav with logo and connect button */}
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
-            <div className="w-8 h-8">
-              <Logo />
-            </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
-              Connect.Flow
-            </span>
-          </div>
-          
-          <ConnectButton />
-        </div>
-      </nav>
+
 
       <div className="max-w-4xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
@@ -271,7 +276,6 @@ const RegisterYourself = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
