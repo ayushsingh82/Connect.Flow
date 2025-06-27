@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 
 export default function Dashboard() {
@@ -37,10 +39,30 @@ export default function Dashboard() {
     }
   ];
 
+  const handleChat = (transactionId: number) => {
+    // Handle chat action
+    console.log(`Opening chat for transaction ${transactionId}`);
+  };
+
+  const handleSetAvailability = () => {
+    // Handle set availability action
+    console.log('Setting availability');
+  };
+
+  const handleViewAnalytics = () => {
+    // Handle view analytics action
+    console.log('Viewing analytics');
+  };
+
+  const handleManageProfile = () => {
+    // Handle manage profile action
+    console.log('Managing profile');
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Main content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Dashboard header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Your Dashboard</h1>
@@ -99,7 +121,7 @@ export default function Dashboard() {
                     <td className="px-6 py-4">
                       <button 
                         className="px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-semibold hover:bg-green-600 transition-colors"
-                        onClick={() => {/* Handle chat action */}}
+                        onClick={() => handleChat(transaction.id)}
                       >
                         Chat
                       </button>
@@ -134,13 +156,22 @@ export default function Dashboard() {
           <div className="bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl p-6">
             <h3 className="text-lg font-semibold text-white mb-4">Quick Actions</h3>
             <div className="space-y-3">
-              <button className="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors text-left">
+              <button 
+                className="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors text-left"
+                onClick={handleSetAvailability}
+              >
                 Set Availability
               </button>
-              <button className="w-full px-4 py-2 border border-green-500 text-green-400 rounded-lg font-semibold hover:bg-green-500/10 transition-colors text-left">
+              <button 
+                className="w-full px-4 py-2 border border-green-500 text-green-400 rounded-lg font-semibold hover:bg-green-500/10 transition-colors text-left"
+                onClick={handleViewAnalytics}
+              >
                 View Analytics
               </button>
-              <button className="w-full px-4 py-2 border border-green-500 text-green-400 rounded-lg font-semibold hover:bg-green-500/10 transition-colors text-left">
+              <button 
+                className="w-full px-4 py-2 border border-green-500 text-green-400 rounded-lg font-semibold hover:bg-green-500/10 transition-colors text-left"
+                onClick={handleManageProfile}
+              >
                 Manage Profile
               </button>
             </div>
