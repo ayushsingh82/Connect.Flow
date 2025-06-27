@@ -113,21 +113,7 @@ export default function Leaderboard() {
           </div>
         </div>
 
-        {/* Stats section */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Total Market Cap</h3>
-            <p className="text-2xl font-bold text-green-400">20,000,000 FLOW</p>
-          </div>
-          <div className="bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Active Creators</h3>
-            <p className="text-2xl font-bold text-green-400">1,247</p>
-          </div>
-          <div className="bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Total Volume</h3>
-            <p className="text-2xl font-bold text-green-400">2.5M FLOW</p>
-          </div>
-        </div>
+    
       </div>
     </div>
   );

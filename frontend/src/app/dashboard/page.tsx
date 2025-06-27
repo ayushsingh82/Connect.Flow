@@ -133,50 +133,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Additional stats section */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Recent Activity</h3>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-white/80 text-sm">New time purchase</span>
-                <span className="text-green-400 text-sm">+15 FLOW</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white/80 text-sm">Session completed</span>
-                <span className="text-green-400 text-sm">+30 FLOW</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white/80 text-sm">New connection</span>
-                <span className="text-blue-400 text-sm">+1</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Quick Actions</h3>
-            <div className="space-y-3">
-              <button 
-                className="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors text-left"
-                onClick={handleSetAvailability}
-              >
-                Set Availability
-              </button>
-              <button 
-                className="w-full px-4 py-2 border border-green-500 text-green-400 rounded-lg font-semibold hover:bg-green-500/10 transition-colors text-left"
-                onClick={handleViewAnalytics}
-              >
-                View Analytics
-              </button>
-              <button 
-                className="w-full px-4 py-2 border border-green-500 text-green-400 rounded-lg font-semibold hover:bg-green-500/10 transition-colors text-left"
-                onClick={handleManageProfile}
-              >
-                Manage Profile
-              </button>
-            </div>
-          </div>
-        </div>
+   
       </div>
     </div>
   );

@@ -1,12 +1,10 @@
 import React from 'react'
 import Link from 'next/link';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 
 
-// Placeholder ConnectButton
-const ConnectButton = () => (
-  <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">Connect Wallet</button>
-);
+
 
 const Navbar = () => {
   return (

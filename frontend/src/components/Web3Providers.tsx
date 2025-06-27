@@ -7,11 +7,7 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { WagmiProvider } from 'wagmi';
 import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  base,
+ flowTestnet
 } from 'wagmi/chains';
 import {
   QueryClientProvider,
@@ -20,9 +16,9 @@ import {
 import { ReactNode } from "react";
 
 const config = getDefaultConfig({
-  appName: 'DynaFi',
+  appName: 'Connect.Flow',
   projectId: 'YOUR_PROJECT_ID', // <-- replace with your actual project ID
-  chains: [mainnet, polygon, optimism, arbitrum, base],
+  chains: [flowTestnet],
   ssr: false,
 });
 

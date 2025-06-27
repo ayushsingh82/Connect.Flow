@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <Web3Providers>
           <Navbar />
-          <main className="flex-grow pt-28">
+          <main className="">
             {children}
           </main>
           <Footer />
