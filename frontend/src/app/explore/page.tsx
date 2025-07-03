@@ -14,7 +14,8 @@ const Explore = () => {
       flowRate: "90 FLOW/min",
       bio: "Pioneering digital artist exploring the intersection of AI and human creativity. Known for generative art pieces that blend traditional techniques with cutting-edge technology.",
       image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah&backgroundColor=00ff00&mouth=smile&style=circle",
-      twitter: "@sarahchen"
+      twitter: "@sarahchen",
+      tags: ["Digital Art", "AI", "Generative", "NFTs"]
     },
     {
       id: 2,
@@ -25,7 +26,8 @@ const Explore = () => {
       flowRate: "120 FLOW/min",
       bio: "Electronic music producer creating ambient soundscapes and experimental beats. Pushing boundaries in the digital music space.",
       image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex&backgroundColor=00ff00&mouth=smile&style=circle",
-      twitter: "@alexrivera"
+      twitter: "@alexrivera",
+      tags: ["Music", "Electronic", "Ambient", "Production"]
     },
     {
       id: 3,
@@ -36,7 +38,8 @@ const Explore = () => {
       flowRate: "75 FLOW/min",
       bio: "Award-winning 3D animator specializing in character design and storytelling through motion graphics and visual effects.",
       image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Maya&backgroundColor=00ff00&mouth=smile&style=circle",
-      twitter: "@mayapatel"
+      twitter: "@mayapatel",
+      tags: ["3D Animation", "Character Design", "VFX", "Storytelling"]
     }
   ]
 
@@ -72,6 +75,7 @@ interface Creator {
   bio: string
   image: string
   twitter: string
+  tags: string[]
 }
 
 const CreatorBox = ({ creator }: { creator: Creator }) => {
@@ -113,7 +117,7 @@ const CreatorBox = ({ creator }: { creator: Creator }) => {
       </div>
 
       {/* Buy Time Button */}
-      <Link href="/buy">
+      <Link href={`/buy?name=${encodeURIComponent(creator.name)}&twitter=${encodeURIComponent(creator.twitter)}&title=${encodeURIComponent(creator.title)}&bio=${encodeURIComponent(creator.bio)}&tokenSymbol=${encodeURIComponent(creator.tokenSymbol)}&flowRate=${encodeURIComponent(creator.flowRate)}&id=${creator.id}&tags=${encodeURIComponent(creator.tags.join(','))}`}>
         <button className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm">
           Buy Time
         </button>

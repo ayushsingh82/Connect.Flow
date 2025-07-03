@@ -190,7 +190,7 @@ export default function Home() {
                       <button 
                         className="opacity-0 group-hover:opacity-100 transition-all duration-300 px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-semibold transform scale-95 group-hover:scale-100 hover:bg-green-600 shadow-lg shadow-green-500/25 z-10"
                       >
-                      <Link href="/buy"> Buy Time</Link>
+                      <Link href="/"> Buy Time</Link>
                       </button>
                     </div>
                   </div>
@@ -280,7 +280,7 @@ export default function Home() {
                     <button 
                       className="opacity-0 group-hover:opacity-100 transition-all duration-300 px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-semibold transform scale-95 group-hover:scale-100 hover:bg-green-600 shadow-lg shadow-green-500/25 z-10"
                     >
-                    <Link href="/buy"> Buy Time</Link>
+                    <Link href="/"> Buy Time</Link>
                     </button>
                   </div>
                   {/* Rest of the card content */}

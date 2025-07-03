@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 // Placeholder Logo component
 const Logo = () => (
@@ -23,19 +24,48 @@ declare global {
 const NOUNS_IMAGE_BASE = "https://noun.pics/";
 
 const Buy = () => {
+  const searchParams = useSearchParams();
   const [selectedMinutes, setSelectedMinutes] = useState(15);
   const [showChart, setShowChart] = useState(false);
   const basePrice = 50; // Base price for 1 minute
+
+  // Get creator data from URL parameters
+  const creatorName = searchParams.get('name') || "Alex Thompson";
+  const creatorTwitter = searchParams.get('twitter') || "alexdev";
+  const creatorTitle = searchParams.get('title') || "Senior Blockchain Developer";
+  const creatorBio = searchParams.get('bio') || "Senior Blockchain Developer | Expert in Solidity and Web3 Development";
+  const creatorTokenSymbol = searchParams.get('tokenSymbol') || "FLOW";
+  const creatorFlowRate = searchParams.get('flowRate') || "50 FLOW/min";
+  const creatorId = searchParams.get('id') || "1290";
+  const creatorTags = searchParams.get('tags') ? searchParams.get('tags')!.split(',') : ["Blockchain", "Web3", "Solidity"];
+
+  // Extract flow rate number for calculations
+  const flowRateNumber = parseInt(creatorFlowRate.split(' ')[0]) || basePrice;
+
   const [selectedCreator, setSelectedCreator] = useState({
-    name: "Alex Thompson",
-    username: "alexdev",
-    rate: basePrice,
+    name: creatorName,
+    username: creatorTwitter.replace('@', ''),
+    rate: flowRateNumber,
     growth: "-14.48%",
     responseRate: "100%",
-    bio: "Senior Blockchain Developer | Expert in Solidity and Web3 Development",
-    tags: ["Blockchain", "Web3", "Solidity"],
-    nounId: 1290
+    bio: creatorBio,
+    tags: creatorTags,
+    nounId: parseInt(creatorId) || 1290
   });
+
+  // Update selectedCreator when URL params change
+  useEffect(() => {
+    setSelectedCreator({
+      name: creatorName,
+      username: creatorTwitter.replace('@', ''),
+      rate: flowRateNumber,
+      growth: "-14.48%",
+      responseRate: "100%",
+      bio: creatorBio,
+      tags: creatorTags,
+      nounId: parseInt(creatorId) || 1290
+    });
+  }, [creatorName, creatorTwitter, creatorTitle, creatorBio, creatorTokenSymbol, creatorFlowRate, creatorId, creatorTags, flowRateNumber]);
 
   useEffect(() => {
     if (showChart) {
@@ -71,7 +101,7 @@ const Buy = () => {
   }, [showChart]);
 
   const calculateTotalPrice = (minutes: number) => {
-    return (basePrice * minutes).toFixed(2);
+    return (selectedCreator.rate * minutes).toFixed(2);
   };
 
   return (
@@ -94,7 +124,7 @@ const Buy = () => {
                 />
                 <div>
                   <h1 className="text-3xl font-bold text-white mb-2">{selectedCreator.name}</h1>
-                  <p className="text-green-400 text-sm mb-4">@{selectedCreator.username}</p>
+                  <p className="text-green-400 text-sm mb-4">{creatorTwitter}</p>
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                       <span className="text-green-400 font-bold text-xl">{selectedCreator.rate} FLOW</span>
@@ -250,9 +280,7 @@ const Buy = () => {
                 ✕
               </button>
             </div>
-            <div className="bg-black/40 border border-green-500/30 rounded-lg p-4">
-              <div id="tradingview_chart" className="w-full h-[400px]"></div>
-            </div>
+            <div id="tradingview_chart" className="w-full h-96"></div>
           </div>
         </div>
       )}
