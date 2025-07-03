@@ -130,7 +130,7 @@ export default function Home() {
               Get instant access to and invest in your favorite creators & experts.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/explore-creators" className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20 text-center">
+              <Link href="/explore" className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20 text-center">
                 Explore Creators
               </Link>
               <Link href="/register" className="px-6 py-3 border-2 border-green-500 text-green-500 rounded-lg font-semibold hover:bg-green-500/10 transition-colors text-center">
