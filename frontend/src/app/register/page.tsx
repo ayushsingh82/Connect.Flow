@@ -2,6 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { CONTRACT_ADDRESSES } from '@/utils/address';
+import { publicClient, walletClient } from '@/utils/config';
+import ConnectFunFactoryAbi from '@/contracts/TimeFactory.sol/ConnectFunFactory.json';
+import { useAccount } from 'wagmi';
 
 // Placeholder Logo component
 const Logo = () => (
@@ -23,12 +27,14 @@ interface FormData {
   name: string;
   tagline: string;
   twitter: string;
+  tokenSymbol: string;
   specialties: string[];
   bio: string;
   tags: string[];
 }
 
 const RegisterYourself = () => {
+  const { address } = useAccount();
   const [selectedNounId, setSelectedNounId] = useState<number | null>(null);
   const [showNounSelector, setShowNounSelector] = useState(false);
   
@@ -37,12 +43,18 @@ const RegisterYourself = () => {
     name: '',
     tagline: '',
     twitter: '',
+    tokenSymbol: '',
     specialties: [],
     bio: '',
     tags: []
   });
 
   const [newTag, setNewTag] = useState('');
+  
+  // Loading and error states
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   
   // Specialties/expertise options
   const specialtyOptions = [
@@ -106,28 +118,89 @@ const RegisterYourself = () => {
     });
   };
   
-  // Form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  // Form submission with contract call
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Here you would typically send the data to your backend
-    // Then redirect after successful submission
-    alert('Registration successful!');
-    // Use Next.js router or window.location for navigation
-    window.location.href = '/';
+    
+    if (!address) {
+      setError('Please connect your wallet first');
+      return;
+    }
+
+    if (!formData.name.trim() || !formData.tokenSymbol.trim()) {
+      setError('Name and Token Symbol are required');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      console.log('Registering creator:', { name: formData.name, symbol: formData.tokenSymbol });
+
+      // Call the contract function registerCreator
+      const { request } = await publicClient.simulateContract({
+        address: CONTRACT_ADDRESSES.mainContract as `0x${string}`,
+        abi: ConnectFunFactoryAbi.abi,
+        functionName: 'registerCreator',
+        args: [formData.name, formData.tokenSymbol],
+        account: address
+      });
+
+      // Write to the contract
+      const hash = await walletClient.writeContract(request);
+      await publicClient.waitForTransactionReceipt({ hash });
+
+      setSuccess('Creator registered successfully! Your token and bonding contract have been deployed.');
+      
+      // Store UI-only data in localStorage or your preferred storage
+      const creatorData = {
+        name: formData.name,
+        tokenSymbol: formData.tokenSymbol,
+        twitter: formData.twitter,
+        bio: formData.bio,
+        tags: formData.tags,
+        nounId: selectedNounId,
+        specialties: formData.specialties
+      };
+      
+      localStorage.setItem(`creator_${address}`, JSON.stringify(creatorData));
+      
+      // Redirect after successful registration
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000);
+      
+    } catch (err) {
+      console.error('Error registering creator:', err);
+      setError('Failed to register creator. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-black text-white">
-
-
       <div className="max-w-4xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
           Register as a Creator
         </h1>
 
+        {/* Error and Success Messages */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg">
+            <p className="text-red-400">{error}</p>
+          </div>
+        )}
+        {success && (
+          <div className="mb-6 p-4 bg-green-500/20 border border-green-500/50 rounded-lg">
+            <p className="text-green-400">{success}</p>
+          </div>
+        )}
+
         <div className="bg-black/60 backdrop-blur-md border border-green-500/50 rounded-xl p-8">
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Profile Image Selector */}
             <div className="space-y-2">
               <label className="block text-lg font-medium text-green-400">
@@ -182,12 +255,33 @@ const RegisterYourself = () => {
             {/* Name Input */}
             <div className="space-y-2">
               <label className="block text-lg font-medium text-green-400">
-                Your Name
+                Your Name *
               </label>
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 className="w-full bg-black/40 border border-green-500/30 rounded-lg py-2 px-4 text-white focus:outline-none focus:border-green-500/70 focus:ring-1 focus:ring-green-500/50"
                 placeholder="Enter your name"
+                required
+              />
+            </div>
+
+            {/* Token Symbol Input */}
+            <div className="space-y-2">
+              <label className="block text-lg font-medium text-green-400">
+                Token Symbol *
+              </label>
+              <input
+                type="text"
+                name="tokenSymbol"
+                value={formData.tokenSymbol}
+                onChange={handleChange}
+                className="w-full bg-black/40 border border-green-500/30 rounded-lg py-2 px-4 text-white focus:outline-none focus:border-green-500/70 focus:ring-1 focus:ring-green-500/50"
+                placeholder="Enter your token symbol (e.g., NOUN, BEAT, ANIM)"
+                maxLength={10}
+                required
               />
             </div>
 
@@ -269,9 +363,12 @@ const RegisterYourself = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20"
+              disabled={loading}
+              className={`w-full px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20 ${
+                loading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
-              Register as Creator
+              {loading ? 'Registering Creator...' : 'Register as Creator'}
             </button>
           </form>
         </div>
