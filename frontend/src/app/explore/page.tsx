@@ -43,9 +43,7 @@ const Explore = () => {
       // This could be done by listening to CreatorRegistered events or maintaining a list
       const knownCreatorAddresses = address ? [address] : []
       
-      // Debug: Log the connected address
-      console.log('Connected wallet address:', address)
-      console.log('Known creator addresses:', knownCreatorAddresses)
+
 
       const creatorsData: Creator[] = []
 
@@ -83,8 +81,7 @@ const Explore = () => {
             const uiData = localStorage.getItem(`creator_${creatorAddress}`)
             const parsedUIData = uiData ? JSON.parse(uiData) : {}
             
-            // Debug: Log what's in localStorage
-            console.log(`Creator ${creatorAddress} localStorage data:`, parsedUIData)
+
 
             // Check if user has registered (has localStorage data)
             const hasRegistered = Object.keys(parsedUIData).length > 0
@@ -193,15 +190,7 @@ const Explore = () => {
           </p>
         </div>
 
-        {/* Debug Section - Remove in production */}
-        {address && (
-          <div className="mb-8 p-4 bg-gray-800 rounded-lg">
-            <h3 className="text-lg font-semibold text-yellow-400 mb-2">Debug Info</h3>
-            <p className="text-sm text-gray-300 mb-2">Connected Address: {address}</p>
-            <p className="text-sm text-gray-300 mb-2">LocalStorage Key: creator_{address}</p>
-            <p className="text-sm text-gray-300">LocalStorage Data: {localStorage.getItem(`creator_${address}`) || 'No data found'}</p>
-          </div>
-        )}
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {creators.map((creator) => (
