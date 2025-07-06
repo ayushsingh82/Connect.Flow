@@ -26,8 +26,9 @@ async function uploadJSONToIPFS(data: Metadata): Promise<string | undefined> {
     console.log('✅ Uploaded to IPFS via Pinata');
     console.log('CID:', response.data.IpfsHash);
     return response.data.IpfsHash;
-  } catch (error: any) {
-    console.error('❌ Failed to upload to IPFS:', error.response?.data || error.message);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    console.error('❌ Failed to upload to IPFS:', errorMessage);
     return undefined;
   }
 }
@@ -67,7 +68,7 @@ const TimeCapsuleForm: React.FC = () => {
       } else {
         setError('Failed to upload to IPFS');
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred while uploading');
     } finally {
       setIsLoading(false);
