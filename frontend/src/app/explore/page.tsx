@@ -32,7 +32,7 @@ const Explore = () => {
 
   useEffect(() => {
     fetchCreators()
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchCreators = async () => {
     try {

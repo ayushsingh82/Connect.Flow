@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Web3Providers from "@/components/Web3Providers";
+import ClientWrapper from "@/components/ClientWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,13 +31,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Web3Providers>
-          <Navbar />
-          <main className="">
-            {children}
-          </main>
-          <Footer />
-        </Web3Providers>
+        <ClientWrapper>
+          <Web3Providers>
+            <Navbar />
+            <main className="">
+              {children}
+            </main>
+            <Footer />
+          </Web3Providers>
+        </ClientWrapper>
       </body>
     </html>
   );
