@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
@@ -9,6 +9,12 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 
 const Navbar = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <nav className="bg-black border-b border-green-500/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
@@ -37,7 +43,13 @@ const Navbar = () => {
           </div>
           {/* Connect button and Dashboard button */}
           <div className="flex items-center gap-4">
-            <ConnectButton />
+            {mounted ? (
+              <ConnectButton />
+            ) : (
+              <div className="px-6 py-3 bg-gray-600 text-white rounded-lg font-semibold">
+                Connect Wallet
+              </div>
+            )}
             
             <Link 
               href="/dashboard" 

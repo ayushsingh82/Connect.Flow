@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { CONTRACT_ADDRESSES } from '@/utils/address';
 import { publicClient, walletClient } from '@/utils/config';
@@ -27,6 +27,7 @@ const RegisterYourself = () => {
   const { address } = useAccount();
   const [selectedNounId, setSelectedNounId] = useState<number | null>(null);
   const [showNounSelector, setShowNounSelector] = useState(false);
+  const [mounted, setMounted] = useState(false);
   
   // Form state
   const [formData, setFormData] = useState<FormData>({
@@ -45,6 +46,10 @@ const RegisterYourself = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
 
   
@@ -121,22 +126,24 @@ const RegisterYourself = () => {
       setSuccess('Creator registered successfully! Your token and bonding contract have been deployed.');
       
       // Store UI-only data in localStorage or your preferred storage
-      const creatorData = {
-        name: formData.name,
-        tokenSymbol: formData.tokenSymbol,
-        twitter: formData.twitter,
-        bio: formData.bio,
-        tags: formData.tags,
-        nounId: selectedNounId,
-        specialties: formData.specialties
-      };
-      
-      localStorage.setItem(`creator_${address}`, JSON.stringify(creatorData));
-      
-      // Redirect after successful registration
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 2000);
+      if (typeof window !== 'undefined') {
+        const creatorData = {
+          name: formData.name,
+          tokenSymbol: formData.tokenSymbol,
+          twitter: formData.twitter,
+          bio: formData.bio,
+          tags: formData.tags,
+          nounId: selectedNounId,
+          specialties: formData.specialties
+        };
+        
+        localStorage.setItem(`creator_${address}`, JSON.stringify(creatorData));
+        
+        // Redirect after successful registration
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 2000);
+      }
       
     } catch (err) {
       console.error('Error registering creator:', err);
@@ -145,6 +152,17 @@ const RegisterYourself = () => {
       setLoading(false);
     }
   };
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
+          <p className="text-white/60">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">

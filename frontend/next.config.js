@@ -16,6 +16,8 @@ const nextConfig = {
     return config;
   },
   
+
+  
   // Optimize images
   images: {
     domains: ['noun.pics', 'api.dicebear.com'],

@@ -29,10 +29,17 @@ const Explore = () => {
   const [creators, setCreators] = useState<Creator[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    fetchCreators()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (mounted) {
+      fetchCreators()
+    }
+  }, [mounted]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchCreators = async () => {
     try {
@@ -116,6 +123,17 @@ const Explore = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
+          <p className="text-white/60">Loading...</p>
+        </div>
+      </div>
+    )
   }
 
   if (loading) {
