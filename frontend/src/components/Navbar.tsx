@@ -36,8 +36,9 @@ const Navbar = () => {
             </div>
           </div>
           {/* Connect button and Dashboard button */}
-          <div className="flex flex-col items-end gap-2">
+          <div className="flex items-center gap-4">
             <ConnectButton />
+            
             <Link 
               href="/dashboard" 
               className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500/20 to-green-600/20 rounded-xl border border-green-500/50 hover:bg-green-500/10 transition-all duration-300 group"
