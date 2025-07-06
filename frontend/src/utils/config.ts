@@ -1,5 +1,4 @@
 import { createPublicClient, createWalletClient, custom, http } from 'viem';
-import { privateKeyToAccount } from 'viem/accounts';
 import { flowTestnet } from 'viem/chains';
 
 export const publicClient = createPublicClient({

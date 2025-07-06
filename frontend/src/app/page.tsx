@@ -1,14 +1,5 @@
 import Link from 'next/link';
-
-// Placeholder Logo component
-const Logo = () => (
-  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center font-bold text-white">CF</div>
-);
-
-// Placeholder ConnectButton
-const ConnectButton = () => (
-  <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">Connect Wallet</button>
-);
+import Image from 'next/image';
 
 const NOUNS_IMAGE_BASE = "https://noun.pics/";
 
@@ -100,16 +91,18 @@ const animationStyles = `
   }
 `;
 
-const generateAvatar = (index: number) => {
-  const nounId = 1290 + index;
-  return (
-    <img 
-      src={`${NOUNS_IMAGE_BASE}${nounId}.png`}
-      alt={`NOUN ${nounId}`}
-      className="w-12 h-12 rounded-full object-cover"
-    />
-  );
-};
+  const generateAvatar = (index: number) => {
+    const nounId = 1290 + index;
+    return (
+      <Image 
+        src={`${NOUNS_IMAGE_BASE}${nounId}.png`}
+        alt={`NOUN ${nounId}`}
+        width={48}
+        height={48}
+        className="w-12 h-12 rounded-full object-cover"
+      />
+    );
+  };
 
 export default function Home() {
   return (

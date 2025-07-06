@@ -1,21 +1,11 @@
 "use client";
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import Image from 'next/image';
 import { CONTRACT_ADDRESSES } from '@/utils/address';
 import { publicClient, walletClient } from '@/utils/config';
 import ConnectFunFactoryAbi from '@/contracts/TimeFactory.sol/ConnectFunFactory.json';
 import { useAccount } from 'wagmi';
-
-// Placeholder Logo component
-const Logo = () => (
-  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center font-bold text-white">CF</div>
-);
-
-// Placeholder ConnectButton
-const ConnectButton = () => (
-  <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">Connect Wallet</button>
-);
 
 const NOUNS_IMAGE_BASE = "https://noun.pics/";
 const NOUNS_RANGE = {
@@ -56,14 +46,7 @@ const RegisterYourself = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   
-  // Specialties/expertise options
-  const specialtyOptions = [
-    { id: 'designer', label: 'Designer' },
-    { id: 'defi', label: 'DeFi Expert' },
-    { id: 'nft', label: 'NFTs Expert' },
-    { id: 'investor', label: 'Investor' },
-    { id: 'founder', label: 'Founder' }
-  ];
+
   
   // Generate array of NOUN IDs
   const nounIds = Array.from(
@@ -99,24 +82,7 @@ const RegisterYourself = () => {
     });
   };
   
-  // Handle checkbox changes
-  const handleSpecialtyChange = (id: string) => {
-    const updatedSpecialties = [...formData.specialties];
-    
-    if (updatedSpecialties.includes(id)) {
-      // Remove if already selected
-      const index = updatedSpecialties.indexOf(id);
-      updatedSpecialties.splice(index, 1);
-    } else {
-      // Add if not selected
-      updatedSpecialties.push(id);
-    }
-    
-    setFormData({
-      ...formData,
-      specialties: updatedSpecialties
-    });
-  };
+
   
   // Form submission with contract call
   const handleSubmit = async (e: React.FormEvent) => {
@@ -213,9 +179,11 @@ const RegisterYourself = () => {
                   className="w-32 h-32 rounded-full overflow-hidden border-2 border-green-500/50 hover:border-green-500 transition-colors"
                 >
                   {selectedNounId ? (
-                    <img
+                    <Image
                       src={`${NOUNS_IMAGE_BASE}${selectedNounId}.png`}
                       alt={`Selected NOUN ${selectedNounId}`}
+                      width={128}
+                      height={128}
                       className="w-full h-full object-cover"
                     />
                   ) : (
@@ -239,9 +207,11 @@ const RegisterYourself = () => {
                           }}
                           className="w-20 h-20 rounded-lg overflow-hidden border-2 border-transparent hover:border-green-500 transition-colors"
                         >
-                          <img
+                          <Image
                             src={`${NOUNS_IMAGE_BASE}${nounId}.png`}
                             alt={`NOUN ${nounId}`}
+                            width={80}
+                            height={80}
                             className="w-full h-full object-cover"
                           />
                         </button>

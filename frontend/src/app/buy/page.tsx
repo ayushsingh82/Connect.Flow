@@ -1,23 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 
-// Placeholder Logo component
-const Logo = () => (
-  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center font-bold text-white">CF</div>
-);
 
-// Placeholder ConnectButton
-const ConnectButton = () => (
-  <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">Connect Wallet</button>
-);
 
 // Extend Window interface for TradingView
 declare global {
   interface Window {
-    TradingView: any;
+    TradingView: {
+      widget: (config: unknown) => unknown;
+    };
   }
 }
 
@@ -37,7 +31,10 @@ const Buy = () => {
   const creatorTokenSymbol = searchParams.get('tokenSymbol') || "FLOW";
   const creatorFlowRate = searchParams.get('flowRate') || "50 FLOW/min";
   const creatorId = searchParams.get('id') || "1290";
-  const creatorTags = searchParams.get('tags') ? searchParams.get('tags')!.split(',') : ["Blockchain", "Web3", "Solidity"];
+  const creatorTags = useMemo(() => 
+    searchParams.get('tags') ? searchParams.get('tags')!.split(',') : ["Blockchain", "Web3", "Solidity"],
+    [searchParams]
+  );
 
   // Extract flow rate number for calculations
   const flowRateNumber = parseInt(creatorFlowRate.split(' ')[0]) || basePrice;
@@ -76,7 +73,7 @@ const Buy = () => {
 
       script.onload = () => {
         if (window.TradingView) {
-          new window.TradingView.widget({
+          window.TradingView.widget({
             "width": "100%",
             "height": 400,
             "symbol": "BINANCE:FLOWUSDT",
@@ -117,9 +114,11 @@ const Buy = () => {
             {/* Profile section - outside of box */}
             <div className="mb-8">
               <div className="flex items-start gap-6 mb-8">
-                <img 
+                <Image 
                   src={`${NOUNS_IMAGE_BASE}${selectedCreator.nounId}.png`}
                   alt={selectedCreator.name}
+                  width={96}
+                  height={96}
                   className="w-24 h-24 rounded-full border-2 border-green-500/50"
                 />
                 <div>

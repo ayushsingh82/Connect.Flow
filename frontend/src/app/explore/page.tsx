@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { publicClient } from '@/utils/config'
 import { CONTRACT_ADDRESSES } from '@/utils/address'
 import ConnectFunFactoryAbi from '@/contracts/TimeFactory.sol/ConnectFunFactory.json'
@@ -78,7 +79,7 @@ const Explore = () => {
             }) as string
 
             // Get UI data from localStorage (stored during registration)
-            const uiData = localStorage.getItem(`creator_${creatorAddress}`)
+            const uiData = typeof window !== 'undefined' ? localStorage.getItem(`creator_${creatorAddress}`) : null
             const parsedUIData = uiData ? JSON.parse(uiData) : {}
             
 
@@ -208,9 +209,11 @@ const CreatorBox = ({ creator }: { creator: Creator }) => {
       {/* Creator Image and Token Info */}
       <div className="flex items-center gap-4 mb-4">
         <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-green-500">
-          <img 
+          <Image 
             src={creator.image} 
             alt={creator.name}
+            width={64}
+            height={64}
             className="w-full h-full object-cover"
             onError={(e) => {
               e.currentTarget.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${creator.name}&backgroundColor=00ff00&mouth=smile&style=circle`

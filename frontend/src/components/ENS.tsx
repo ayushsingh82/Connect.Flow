@@ -30,14 +30,8 @@ const ENS_REGISTRY_ABI = [
   },
 ] as const;
 
-// ENS Reverse Resolver ABI - using the same ABI as regular resolver for name function
-const ENS_REVERSE_RESOLVER_ABI = ENS_RESOLVER_ABI;
-
 // Mainnet ENS Registry address
 const ENS_REGISTRY_ADDRESS = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e';
-
-// Reverse Registrar address for reverse resolution
-const REVERSE_REGISTRAR_ADDRESS = '0x084b1c3C81545d370f3634392De611CaaBFf8148';
 
 export class ENSResolver {
   private client: ReturnType<typeof createPublicClient>;
@@ -87,8 +81,8 @@ export class ENSResolver {
       }
 
       return address;
-    } catch (error) {
-      console.error(`Error resolving ENS name ${ensName}:`, error);
+    } catch {
+      console.error(`Error resolving ENS name ${ensName}`);
       return null;
     }
   }
@@ -135,8 +129,8 @@ export class ENSResolver {
       }
 
       return ensName;
-    } catch (error) {
-      console.error(`Error looking up ENS name for ${address}:`, error);
+    } catch {
+      console.error(`Error looking up ENS name for ${address}`);
       return null;
     }
   }
@@ -151,7 +145,7 @@ export class ENSResolver {
       // Basic validation - ENS names should end with .eth and contain valid characters
       const ensRegex = /^[a-zA-Z0-9-]+\.eth$/;
       return ensRegex.test(ensName.toLowerCase());
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -165,7 +159,7 @@ export class ENSResolver {
     try {
       getAddress(address);
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -190,8 +184,9 @@ export const useENS = (rpcUrl?: string) => {
       
       const address = await resolver.resolveENSName(ensName);
       return address;
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      setError(errorMessage);
       return null;
     } finally {
       setLoading(false);
@@ -209,8 +204,9 @@ export const useENS = (rpcUrl?: string) => {
       
       const ensName = await resolver.lookupENSName(address);
       return ensName;
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      setError(errorMessage);
       return null;
     } finally {
       setLoading(false);

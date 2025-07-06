@@ -1,16 +1,6 @@
-import Link from 'next/link';
+import Image from 'next/image';
 
 const NOUNS_IMAGE_BASE = "https://noun.pics/";
-
-// Placeholder Logo component
-const Logo = () => (
-  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center font-bold text-white">CF</div>
-);
-
-// Placeholder ConnectButton
-const ConnectButton = () => (
-  <button className="px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">Connect Wallet</button>
-);
 
 export default function Leaderboard() {
   const rankings = [
@@ -85,9 +75,11 @@ export default function Leaderboard() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <img 
+                        <Image 
                           src={`${NOUNS_IMAGE_BASE}${rank.nounId}.png`}
                           alt={`NOUN ${rank.nounId}`}
+                          width={40}
+                          height={40}
                           className="w-10 h-10 rounded-full"
                         />
                         <div>

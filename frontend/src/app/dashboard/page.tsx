@@ -1,6 +1,6 @@
 "use client";
 
-import Link from 'next/link';
+
 
 export default function Dashboard() {
   // Sample data - in a real app, this would come from your backend
@@ -44,20 +44,7 @@ export default function Dashboard() {
     console.log(`Opening chat for transaction ${transactionId}`);
   };
 
-  const handleSetAvailability = () => {
-    // Handle set availability action
-    console.log('Setting availability');
-  };
 
-  const handleViewAnalytics = () => {
-    // Handle view analytics action
-    console.log('Viewing analytics');
-  };
-
-  const handleManageProfile = () => {
-    // Handle manage profile action
-    console.log('Managing profile');
-  };
 
   return (
     <div className="min-h-screen bg-black text-white">
